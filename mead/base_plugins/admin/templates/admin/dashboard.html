@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Administration{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <h1 class="h4 mb-4"><i class="bi bi-speedometer2 me-2"></i>Dashboard</h1>
+  </div>
+</div>
+
+<!-- Stats cards -->
+<div class="row g-3 mb-5">
+  <div class="col-6 col-md-3">
+    <div class="card stat-card text-center shadow-sm h-100">
+      <div class="card-body py-4">
+        <i class="bi bi-file-text display-6 text-primary"></i>
+        <div class="display-6 fw-bold mt-2">{{ stats.posts }}</div>
+        <div class="text-muted small">Articles</div>
+      </div>
+      <a href="/admin/posts" class="stretched-link"></a>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card stat-card text-center shadow-sm h-100">
+      <div class="card-body py-4">
+        <i class="bi bi-layout-text-window display-6 text-success"></i>
+        <div class="display-6 fw-bold mt-2">{{ stats.pages }}</div>
+        <div class="text-muted small">Pages</div>
+      </div>
+      <a href="/admin/pages" class="stretched-link"></a>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card stat-card text-center shadow-sm h-100">
+      <div class="card-body py-4">
+        <i class="bi bi-folder display-6 text-warning"></i>
+        <div class="display-6 fw-bold mt-2">{{ stats.categories }}</div>
+        <div class="text-muted small">Catégories</div>
+      </div>
+      <a href="/admin/categories" class="stretched-link"></a>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card stat-card text-center shadow-sm h-100">
+      <div class="card-body py-4">
+        <i class="bi bi-eye display-6 text-info"></i>
+        <div class="display-6 fw-bold mt-2">{{ stats.views }}</div>
+        <div class="text-muted small">Vues</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Menu items from registered plugins -->
+<h2 class="h5 mb-3">Gestion</h2>
+<div class="row g-3">
+  {% for item in admin_menu %}
+  <div class="col-6 col-md-4 col-lg-3">
+    <a href="{{ item.url }}"
+       class="card text-decoration-none text-dark shadow-sm stat-card h-100">
+      <div class="card-body text-center py-4">
+        {% if item.icon %}
+        <i class="bi {{ item.icon }} fs-2 text-primary mb-2 d-block"></i>
+        {% endif %}
+        <div class="fw-semibold">{{ item.label }}</div>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

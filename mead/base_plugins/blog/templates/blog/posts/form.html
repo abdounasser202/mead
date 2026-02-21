@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ 'Modifier' if post else 'Nouveau' }} {{ 'page' if is_page else 'article' }} — Administration
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-9 mx-auto">
+    <h1 class="h4 mb-4">
+      <i class="bi bi-{{ 'pencil' if post else 'plus-circle' }} me-2"></i>
+      {{ 'Modifier la' if post else 'Nouvelle' }} {{ 'page' if is_page else 'article' }}
+    </h1>
+
+    <form method="post"
+          action="{{ '/admin/pages/' ~ post.id ~ '/edit' if (post and is_page)
+                   else '/admin/posts/' ~ post.id ~ '/edit' if post
+                   else '/admin/pages/new' if is_page
+                   else '/admin/posts/new' }}">
+
+      <div class="mb-3">
+        <label for="title" class="form-label fw-semibold">Titre</label>
+        <input type="text" class="form-control" id="title" name="title"
+               value="{{ post.title if post else '' }}" required autofocus>
+      </div>
+
+      {% if not is_page %}
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="category_id" class="form-label fw-semibold">Catégorie</label>
+          <select class="form-select" id="category_id" name="category_id">
+            <option value="">— Aucune —</option>
+            {% for cat in categories %}
+            <option value="{{ cat.id }}"
+              {{ 'selected' if post and post.category_id == cat.id }}>
+              {{ cat.name }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="external_url" class="form-label fw-semibold">URL externe (optionnel)</label>
+          <input type="url" class="form-control" id="external_url" name="external_url"
+                 value="{{ post.external_url if post and post.external_url else '' }}"
+                 placeholder="https://…">
+        </div>
+      </div>
+
+      {% if tags %}
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Tags</label>
+        <div class="d-flex flex-wrap gap-2">
+          {% for tag in tags %}
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="tags"
+                   value="{{ tag.id }}" id="tag-{{ tag.id }}"
+                   {{ 'checked' if post and tag in post.tags }}>
+            <label class="form-check-label" for="tag-{{ tag.id }}">
+              #{{ tag.name }}
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
+
+      <div class="mb-4">
+        <label for="content" class="form-label fw-semibold">
+          Contenu
+          <span class="text-muted fw-normal small">(Markdown)</span>
+        </label>
+        <div x-data="{ preview: false }">
+          <div class="mb-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary"
+                    @click="preview = !preview"
+                    x-text="preview ? 'Éditer' : 'Prévisualiser'">
+            </button>
+          </div>
+          <div x-show="!preview">
+            <textarea class="form-control" id="content" name="content" rows="16">{{ post.content if post else '' }}</textarea>
+          </div>
+          <div x-show="preview" class="border rounded p-3 post-content"
+               x-html="window.marked ? marked.parse(document.getElementById('content').value) : ''">
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-check-lg me-1"></i>Enregistrer
+        </button>
+        <a href="{{ '/admin/pages' if is_page else '/admin/posts' }}"
+           class="btn btn-outline-secondary">Annuler</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ settings.blog_name if settings else 'Accueil' }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-8 mx-auto">
+
+    {% if not settings %}
+    <div class="text-center py-5">
+      <h1 class="display-5 fw-bold">Bienvenue sur Mead CMF</h1>
+      <p class="lead text-muted">Le site n'est pas encore configuré.</p>
+      <a href="/setup" class="btn btn-primary btn-lg">Configurer le site</a>
+    </div>
+    {% elif posts %}
+    <h1 class="h3 mb-4 fw-semibold">Derniers articles</h1>
+    {% for post in posts %}
+    <article class="post-item">
+      <div class="row align-items-start">
+        <div class="col-auto post-date">
+          <time datetime="{{ post.created_at.strftime('%Y-%m-%d') }}">
+            {{ post.created_at.strftime('%d %b %Y') }}
+          </time>
+        </div>
+        <div class="col">
+          <div class="post-title">
+            <a href="/post/{{ post.slug }}">{{ post.title }}</a>
+          </div>
+          {% if post.category %}
+          <a href="/category/{{ post.category.slug }}"
+             class="badge text-decoration-none badge-category mt-1">
+            {{ post.category.name }}
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+
+    <div class="mt-4">
+      <a href="/blog" class="btn btn-outline-primary">Tous les articles</a>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+      <p class="text-muted">Aucun article pour l'instant.</p>
+      <a href="/admin/posts/new" class="btn btn-primary">Créer le premier article</a>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

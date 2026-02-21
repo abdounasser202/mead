@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Articles — Administration{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-10 mx-auto">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h4 mb-0"><i class="bi bi-file-text me-2"></i>Articles</h1>
+      <a href="/admin/posts/new" class="btn btn-primary btn-sm">
+        <i class="bi bi-plus-lg me-1"></i>Nouvel article
+      </a>
+    </div>
+
+    {% if posts %}
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Titre</th>
+            <th>Catégorie</th>
+            <th>Date</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in posts %}
+          <tr>
+            <td>
+              <a href="/post/{{ post.slug }}" class="text-decoration-none fw-semibold">
+                {{ post.title }}
+              </a>
+            </td>
+            <td>
+              {% if post.category %}
+              <span class="badge badge-category">{{ post.category.name }}</span>
+              {% else %}
+              <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+            <td class="text-muted small">
+              {{ post.created_at.strftime('%d/%m/%Y') }}
+            </td>
+            <td class="text-end">
+              <a href="/admin/posts/{{ post.id }}/edit"
+                 class="btn btn-sm btn-outline-primary me-1">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <form method="post" action="/admin/posts/{{ post.id }}/delete"
+                    style="display:inline"
+                    onsubmit="return confirm('Supprimer cet article ?')">
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-muted">Aucun article.</p>
+    {% endif %}
+
+    <a href="/admin" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i>Dashboard
+    </a>
+  </div>
+</div>
+{% endblock %}

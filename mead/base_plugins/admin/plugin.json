@@ -1,0 +1,7 @@
+{
+  "name": "admin",
+  "version": "1.0.0",
+  "description": "Admin dashboard & site settings",
+  "depends": ["auth"],
+  "enabled": true
+}

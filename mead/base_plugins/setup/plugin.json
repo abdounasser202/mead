@@ -1,0 +1,7 @@
+{
+  "name": "setup",
+  "version": "1.0.0",
+  "description": "Initial site setup wizard",
+  "depends": ["auth", "admin", "blog"],
+  "enabled": true
+}

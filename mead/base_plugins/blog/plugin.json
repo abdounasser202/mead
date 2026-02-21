@@ -1,0 +1,7 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "Blog engine — posts, categories, tags, pages",
+  "depends": ["auth", "admin"],
+  "enabled": true
+}

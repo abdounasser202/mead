@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Installation de Mead CMF{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7 col-lg-6">
+    <div class="text-center mb-5">
+      <h1 class="display-6 fw-bold">Installation de Mead CMF</h1>
+      <p class="text-muted">Configurez votre site en quelques secondes.</p>
+    </div>
+
+    <div class="card shadow">
+      <div class="card-body p-4">
+        <form method="post" action="/setup">
+
+          <h2 class="h5 mb-3 border-bottom pb-2">
+            <i class="bi bi-globe me-2 text-primary"></i>Le site
+          </h2>
+          <div class="mb-3">
+            <label for="blog_name" class="form-label fw-semibold">Nom du site</label>
+            <input type="text" class="form-control" id="blog_name" name="blog_name"
+                   value="Mon blog" required>
+          </div>
+          <div class="mb-4">
+            <label for="blog_description" class="form-label fw-semibold">Description</label>
+            <input type="text" class="form-control" id="blog_description"
+                   name="blog_description" placeholder="Un blog propulsé par Mead CMF">
+          </div>
+
+          <h2 class="h5 mb-3 border-bottom pb-2">
+            <i class="bi bi-person-lock me-2 text-primary"></i>Administrateur
+          </h2>
+          <div class="mb-3">
+            <label for="username" class="form-label fw-semibold">Nom d'utilisateur</label>
+            <input type="text" class="form-control" id="username" name="username"
+                   value="admin" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label fw-semibold">Email</label>
+            <input type="email" class="form-control" id="email" name="email"
+                   placeholder="admin@example.com" required>
+          </div>
+          <div class="mb-4">
+            <label for="password" class="form-label fw-semibold">Mot de passe</label>
+            <input type="password" class="form-control" id="password" name="password"
+                   required minlength="6">
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 py-2">
+            <i class="bi bi-rocket-takeoff me-2"></i>Installer Mead CMF
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
