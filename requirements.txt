@@ -6,4 +6,4 @@ python-slugify>=8.0.1
 pillow>=10.1.0
 user-agents>=2.2.0
 feedgen>=1.0.0
-python-dotenv==1.0.1
+python-dotenv==1.2.2
